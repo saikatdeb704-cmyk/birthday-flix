@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Netflix · Happy Birthday</title>
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --red: #e50914;
+  --bg: #0b0b0b;
+  --text: #fff;
+  --muted: #b3b3b3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: #000; color: var(--text); font-family: "Inter", system-ui, sans-serif; }
+body { overflow-x: hidden; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hidden { display: none !important; }
+
+@media (min-width: 900px) { .mobile-only { display: none !important; } }
+@media (max-width: 899px) { .desktop-only { display: none !important; } }
+
+/* ---------- logos ---------- */
+.logo-n, .intro-logo {
+  font-family: "Bebas Neue", sans-serif; color: var(--red);
+  text-shadow: 0 0 1px #000, 2px 2px 0 #8b0000;
+  line-height: 1;
+}
+.logo-n { font-size: 44px; }
+.logo-text { font-family: "Bebas Neue", sans-serif; color: var(--red); font-size: 56px; letter-spacing: 2px; }
+.logo-text.small { font-size: 36px; margin-left: -6px; }
+
+/* ---------- intro ---------- */
+.screen { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; z-index: 50; }
+#intro { cursor: pointer; overflow: hidden; }
+#introVideo { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+.sound-gate {
+  position: fixed; inset: 0; z-index: 55; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #000c; backdrop-filter: blur(4px); gap: 14px; cursor: pointer;
+}
+.sound-btn {
+  display: inline-flex; align-items: center; gap: 10px; background: var(--red); color: #fff;
+  padding: 14px 28px; border-radius: 999px; font-weight: 700; font-size: 16px;
+  box-shadow: 0 0 30px #e5091488; animation: pulseBtn 1.5s infinite;
+}
+@keyframes pulseBtn { 50% { transform: scale(1.06); } }
+
+/* ---------- profiles ---------- */
+#profiles .logo-text { position: absolute; top: 20px; left: 4%; font-size: 44px; }
+#profiles h1 { font-weight: 500; font-size: clamp(28px, 5vw, 56px); margin-bottom: 36px; animation: fadeUp .7s both; }
+.profile-list { display: flex; gap: clamp(20px, 4vw, 40px); animation: fadeUp .7s .15s both; }
+.profile { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--muted); }
+.profile img, .profile .kids {
+  width: clamp(110px, 16vw, 160px); aspect-ratio: 1; border-radius: 8px; object-fit: cover;
+  border: 3px solid transparent; transition: .2s;
+}
+.profile .kids { display: grid; place-items: center; font-size: 48px; background: linear-gradient(135deg, #333, #111); }
+.profile:hover img, .profile:focus img { border-color: #fff; transform: scale(1.04); }
+.profile:hover span { color: #fff; }
+.profile.locked { opacity: .45; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } }
+
+/* ---------- topbar ---------- */
+#app { min-height: 100vh; background: var(--bg); padding-bottom: 90px; animation: fadeIn .8s; }
+@keyframes fadeIn { from { opacity: 0; } }
+#topbar {
+  position: fixed; inset: 0 0 auto; z-index: 20; display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 4%; padding-top: max(14px, env(safe-area-inset-top));
+  background: linear-gradient(#000c, transparent); transition: background .3s;
+}
+#topbar.solid { background: #141414; }
+#topbar .left, #topbar .right { display: flex; align-items: center; gap: 18px; }
+#topbar nav { display: flex; gap: 20px; margin-left: 20px; font-size: 14px; }
+#topbar nav a { color: #e5e5e5; cursor: pointer; }
+#topbar nav a.active { font-weight: 700; color: #fff; }
+.icon { position: relative; display: grid; place-items: center; }
+.dot { position: absolute; top: -6px; right: -8px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; width: 18px; height: 18px; display: grid; place-items: center; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff40; }
+
+.pills { position: absolute; top: 76px; left: 0; right: 0; z-index: 15; display: flex; justify-content: space-around; font-weight: 600; font-size: 17px; text-shadow: 0 1px 6px #000; }
+
+/* ---------- hero ---------- */
+#hero { position: relative; height: 92vh; min-height: 560px; display: flex; align-items: flex-end; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; animation: kenburns 22s ease-in-out infinite alternate; }
+@keyframes kenburns { to { transform: scale(1.12) translate(-1%, -2%); } }
+.hero-shade { position: absolute; inset: 0; background:
+  linear-gradient(to top, var(--bg) 2%, #0b0b0bcc 22%, transparent 55%),
+  linear-gradient(to right, #000a, transparent 60%); }
+.hero-content { position: relative; z-index: 2; padding: 0 4% 6vh; width: 100%; max-width: 680px; }
+.badge { font-weight: 700; letter-spacing: 6px; color: #ddd; font-size: 15px; display: flex; align-items: center; gap: 6px; }
+.badge b { font-family: "Bebas Neue"; color: var(--red); font-size: 30px; letter-spacing: 0; }
+.hero-title { font-family: "Pacifico", cursive; font-weight: 400; line-height: 1; margin: 6px 0 14px; text-shadow: 3px 3px 0 #0006; }
+.hero-title span { display: block; font-size: clamp(54px, 9vw, 110px); }
+.hero-title span:last-child { margin-top: -6px; }
+.hero-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 14px; color: #ddd; margin-bottom: 12px; }
+.match { color: #46d369; font-weight: 700; }
+.rating { border: 1px solid #ffffff80; padding: 0 6px; border-radius: 3px; font-size: 12px; }
+.hero-desc { font-size: 17px; line-height: 1.45; color: #eee; margin-bottom: 20px; text-shadow: 1px 1px 3px #000; }
+.countdown { display: inline-block; background: var(--red); padding: 6px 12px; border-radius: 4px; font-weight: 700; font-size: 13px; margin-bottom: 16px; letter-spacing: .5px; }
+.hero-actions { display: flex; align-items: center; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 10px 26px; border-radius: 5px; font-weight: 700; font-size: 18px; transition: .2s; }
+.btn svg { width: 26px; height: 26px; }
+.btn.play { background: #fff; color: #000; }
+.btn.play svg { fill: #000; stroke: none; }
+.btn.play:hover { background: #ffffffcc; }
+.btn.info { background: #6d6d6eb3; color: #fff; }
+.btn.info:hover { background: #6d6d6e66; }
+
+@media (max-width: 899px) {
+  #hero { height: 88vh; min-height: 600px; }
+  .hero-content { max-width: none; text-align: center; padding-bottom: 3vh; }
+  .badge { justify-content: center; }
+  .hero-meta { justify-content: center; }
+  .hero-actions { justify-content: space-evenly; }
+  .btn.play { padding: 10px 46px; font-size: 17px; }
+  .mini { display: flex; flex-direction: column; align-items: center; font-size: 12px; gap: 4px; width: 60px; }
+  .mini .plus { font-size: 24px; line-height: 1; }
+}
+
+/* ---------- rows ---------- */
+#rows { position: relative; z-index: 3; margin-top: -2vh; }
+.row { margin-bottom: 34px; }
+.row h2 { font-size: clamp(17px, 1.6vw, 22px); font-weight: 800; padding: 0 4%; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px; }
+.row-wrap { position: relative; }
+.slider { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 4% 18px; scrollbar-width: none; scroll-padding: 0 4%; }
+.slider::-webkit-scrollbar { display: none; }
+.arrow { position: absolute; top: 8px; bottom: 18px; width: 4%; min-width: 36px; z-index: 4; background: #000a; font-size: 36px; opacity: 0; transition: .2s; }
+.row-wrap:hover .arrow { opacity: 1; }
+.arrow.l { left: 0; } .arrow.r { right: 0; }
+@media (hover: none) { .arrow { display: none; } }
+
+.card { position: relative; flex: 0 0 auto; scroll-snap-align: start; border-radius: 8px; overflow: hidden; cursor: pointer; background: #222; transition: transform .25s, box-shadow .25s; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card.portrait { width: clamp(130px, 15vw, 210px); aspect-ratio: 2 / 3; }
+.card.landscape { width: clamp(220px, 24vw, 340px); aspect-ratio: 16 / 9; }
+.card .label { position: absolute; inset: auto 0 0; padding: 26px 10px 10px; font-weight: 700; font-size: 13px; background: linear-gradient(transparent, #000d); opacity: 0; transition: .25s; }
+.card .playicon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(.6); width: 48px; height: 48px; border-radius: 50%; border: 2px solid #fff; background: #0008; display: grid; place-items: center; opacity: 0; transition: .25s; }
+.card .playicon svg { fill: #fff; stroke: none; width: 20px; margin-left: 3px; }
+.card:hover { transform: scale(1.07); z-index: 5; box-shadow: 0 10px 30px #000c; }
+.card:hover .label, .card:hover .playicon { opacity: 1; }
+.card:hover .playicon { transform: translate(-50%, -50%) scale(1); }
+@media (hover: none) { .card .label { opacity: 1; } }
+
+.top10 { flex: 0 0 auto; display: flex; align-items: flex-end; scroll-snap-align: start; cursor: pointer; }
+.top10 .num { font-family: "Bebas Neue"; font-size: clamp(130px, 14vw, 210px); line-height: .78; color: var(--bg); -webkit-text-stroke: 4px #595959; margin-right: -22px; letter-spacing: -10px; }
+.top10 .card { width: clamp(110px, 11vw, 160px); aspect-ratio: 2 / 3; }
+.top10:hover .card { transform: scale(1.06); }
+
+.credits { text-align: center; color: #777; font-size: 13px; padding: 30px 0 10px; }
+
+/* ---------- bottom nav ---------- */
+#bottomnav { position: fixed; inset: auto 0 0; z-index: 20; display: flex; justify-content: space-around; background: #121212f2; backdrop-filter: blur(10px); padding: 10px 0 max(10px, env(safe-area-inset-bottom)); border-top: 1px solid #222; }
+#bottomnav a { position: relative; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; color: #8c8c8c; }
+#bottomnav a.active { color: #fff; }
+#bottomnav a.active svg { fill: #fff; }
+#bottomnav .dot { top: -6px; right: 8px; }
+
+/* ---------- player ---------- */
+#player { position: fixed; inset: 0; z-index: 60; background: #000; display: flex; align-items: center; justify-content: center; animation: fadeIn .3s; }
+#player video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+#player .close { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 16px; z-index: 2; background: #0008; border-radius: 50%; width: 46px; height: 46px; display: grid; place-items: center; }
+#player .close svg { width: 30px; height: 30px; }
+.player-title { position: absolute; top: max(26px, env(safe-area-inset-top)); left: 76px; right: 20px; z-index: 2; font-weight: 700; text-shadow: 0 1px 4px #000; pointer-events: none; transition: opacity .4s; }
+
+/* ---------- modal ---------- */
+#modal { position: fixed; inset: 0; z-index: 40; background: #000b; overflow-y: auto; display: flex; justify-content: center; padding: 30px 12px; animation: fadeIn .25s; }
+.modal-card { position: relative; width: min(850px, 100%); background: #181818; border-radius: 10px; overflow: hidden; height: fit-content; animation: pop .3s; box-shadow: 0 20px 60px #000; }
+@keyframes pop { from { transform: scale(.9); opacity: 0; } }
+.x { position: absolute; top: 14px; right: 14px; z-index: 3; width: 38px; height: 38px; border-radius: 50%; background: #181818; font-size: 18px; }
+.modal-hero { position: relative; aspect-ratio: 16 / 9; background-size: cover; background-position: center; }
+.modal-hero-shade { position: absolute; inset: 0; background: linear-gradient(to top, #181818, transparent 60%); }
+.modal-hero-inner { position: absolute; left: 5%; bottom: 8%; }
+.modal-hero-inner h2 { font-family: "Pacifico"; font-weight: 400; font-size: clamp(28px, 5vw, 52px); margin-bottom: 14px; text-shadow: 2px 2px 0 #0007; }
+.modal-body { padding: 10px 5% 34px; }
+.modal-body > p { line-height: 1.5; color: #ddd; margin-bottom: 22px; }
+.modal-body h3 { font-size: 22px; margin-bottom: 10px; }
+.ep { display: flex; align-items: center; gap: 16px; padding: 16px 12px; border-bottom: 1px solid #333; border-radius: 6px; cursor: pointer; }
+.ep:hover { background: #2a2a2a; }
+.ep .n { font-size: 22px; color: #999; width: 22px; text-align: center; }
+.ep img { width: 130px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+.ep b { display: block; margin-bottom: 4px; }
+.ep small { color: #aaa; font-size: 13px; }
+
+/* ---------- toast ---------- */
+#toast { position: fixed; top: 80px; right: 4%; z-index: 30; max-width: 320px; background: #141414; border-left: 4px solid var(--red); padding: 14px 18px; border-radius: 6px; box-shadow: 0 10px 30px #000; animation: slideIn .4s; line-height: 1.45; font-size: 14px; }
+@keyframes slideIn { from { transform: translateX(120%); } }
+
+#confetti { position: fixed; inset: 0; pointer-events: none; z-index: 70; }
+
+
+</style>
+</head>
+<body>
+
+  <!-- ========== INTRO (ta-dum) ========== -->
+  <div id="intro" class="screen">
+    <video id="introVideo" src="media/intro.mp4" playsinline preload="auto"></video>
+    <div id="soundGate" class="sound-gate hidden">
+      <div class="sound-btn">Tap to see what I made for you</div>
+    </div>
+  </div>
+
+  <!-- ========== WHO'S WATCHING ========== -->
+  <div id="profiles" class="screen hidden">
+    <div class="logo-text">NETFLIX</div>
+    <h1>Who's watching?</h1>
+    <div class="profile-list">
+      <button class="profile" id="herProfile">
+        <img id="profileImg" alt="" />
+        <span id="profileName"></span>
+      </button>
+      <div class="profile locked">
+        <div class="kids">🔒</div>
+        <span>Only for her</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== MAIN APP ========== -->
+  <div id="app" class="hidden">
+    <header id="topbar">
+      <div class="left">
+        <div class="logo-n">N</div>
+        <div class="logo-text small desktop-only">NETFLIX</div>
+        <nav class="desktop-only">
+          <a class="active">Home</a><a>TV Shows</a><a>Movies</a><a>New &amp; Popular</a><a>My List</a>
+        </nav>
+      </div>
+      <div class="right">
+        <button class="icon" aria-label="Search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+        <button class="icon bell" aria-label="Notifications" id="bellBtn">
+          <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+          <span class="dot">1</span>
+        </button>
+        <img id="navAvatar" class="avatar" alt="" />
+      </div>
+    </header>
+
+    <div class="pills mobile-only">
+      <span>TV Shows</span><span>Movies</span><span>My List</span>
+    </div>
+
+    <section id="hero">
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <div class="badge"><b>N</b> <span id="heroBadge"></span></div>
+        <h1 class="hero-title"><span id="heroLine1"></span><span id="heroLine2"></span></h1>
+        <p class="hero-meta">
+          <span class="match" id="heroMatch"></span>
+          <span id="heroYear"></span>
+          <span class="rating" id="heroRating"></span>
+          <span id="heroSeasons"></span>
+        </p>
+        <p class="hero-desc desktop-only" id="heroDesc"></p>
+        <div id="countdown" class="countdown hidden"></div>
+        <div class="hero-actions">
+          <button class="mini mobile-only" id="myListBtn"><span class="plus">+</span>My List</button>
+          <button class="btn play" id="heroPlay">
+            <svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg> Play
+          </button>
+          <button class="btn info desktop-only" id="heroInfoD">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg> More Info
+          </button>
+          <button class="mini mobile-only" id="heroInfo"><span class="plus">ⓘ</span>Info</button>
+        </div>
+      </div>
+    </section>
+
+    <main id="rows"></main>
+
+    <footer class="credits">
+      Made with ❤️ by <span id="fromName"></span> · A BirthdayFlix Original
+    </footer>
+
+    <nav id="bottomnav" class="mobile-only">
+      <a class="active"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>Home</a>
+      <a><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="12" rx="4"/><path d="M7 11v4M5 13h4M16 12h.01M18 14h.01"/></svg>Games</a>
+      <a class="nh"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/></svg>New &amp; Hot<span class="dot">1</span></a>
+      <a><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg>Fast Laughs</a>
+      <a><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v8M8 12l4 4 4-4"/></svg>Downloads</a>
+    </nav>
+  </div>
+
+  <!-- ========== VIDEO PLAYER ========== -->
+  <div id="player" class="hidden">
+    <button class="close" id="closePlayer" aria-label="Back">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="player-title" id="playerTitle"></div>
+    <video id="video" controls playsinline></video>
+  </div>
+
+  <!-- ========== INFO MODAL ========== -->
+  <div id="modal" class="hidden">
+    <div class="modal-card">
+      <button class="x" id="closeModal">✕</button>
+      <div class="modal-hero" id="modalHero">
+        <div class="modal-hero-shade"></div>
+        <div class="modal-hero-inner">
+          <h2 id="modalTitle"></h2>
+          <button class="btn play" id="modalPlay"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg> Play</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="hero-meta"><span class="match">100% Match</span><span id="modalYear"></span><span class="rating">HD</span></p>
+        <p id="modalDesc"></p>
+        <h3>Episodes</h3>
+        <div id="episodes"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== NOTIFICATION TOAST ========== -->
+  <div id="toast" class="hidden"></div>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+/* =========================================================
+   🎂  EDIT THIS FILE ONLY  🎂
+   Put your photos/videos inside the  /media  folder and
+   change the paths below. Everything else updates itself.
+   ========================================================= */
+
+const CONFIG = {
+  herName: "My Love",            // shown on the profile screen + hero
+  fromName: "Your Favourite Person",
+  birthday: "2026-11-16",        // YYYY-MM-DD  (confetti + countdown)
+  avatar: "media/avatar.jpg",    // her profile pic (square works best)
+
+  hero: {
+    badge: "SERIES",
+    line1: "Happy",
+    line2: "Birthday",
+    image: "media/hero.jpg",     // big background picture
+    video: "media/hero.mp4",     // the video that plays when she clicks ▶ Play
+    match: "100% Match",
+    year: "2026",
+    rating: "U/A 💕",
+    seasons: "Season 1 · Forever",
+    description:
+      "A heartwarming original series about the most beautiful, funny and amazing girl in the world — and the lucky person who gets to love her. New episodes every single day.",
+  },
+
+  /* Each row = one Netflix shelf.
+     type: "portrait" (tall cards like the inspo) | "landscape" | "top10"  */
+  rows: [
+    {
+      title: "Memorys",
+      type: "portrait",
+      items: [
+        { title: "The First Date", thumb: "media/1.jpg", video: "media/1.mp4", description: "Where it all began." },
+        { title: "Cafe Time", thumb: "media/2.jpg", video: "media/2.mp4", description: "Best conversations and you." },
+        { title: "You", thumb: "media/3.jpg", video: "media/3.mp4", description: "My favourite view." },
+        { title: "Road Trip", thumb: "media/4.jpg", video: "media/4.mp4", description: "Wrong turns, best songs." },
+        { title: "Silly Us", thumb: "media/5.jpg", video: "media/5.mp4", description: "Unreleased bloopers." },
+      ],
+    },
+    {
+      title: "Reasons I Love You",
+      type: "top10",
+      items: [
+        { title: "Your Eyes", thumb: "media/r1.jpg", video: "media/r1.mp4", description: "It fixes my worst days." },
+        { title: "My Khawab", thumb: "media/r2.jpg", video: "media/r2.mp4", description: "Loud, contagious, perfect." },
+        { title: "My Whole Heart", thumb: "media/r3.jpg", video: "media/r3.mp4", description: "You care about everyone." },
+      ],
+    },
+    {
+      title: "Our Adventures",
+      type: "landscape",
+      items: [
+        { title: "Well Spent Day", thumb: "media/a1.jpg", video: "media/a1.mp4", description: "Every moment with you. Worth it." },
+        { title: "Late Night Drives", thumb: "media/a2.jpg", video: "media/a2.mp4", description: "Just us and the city lights." },
+        { title: "Food Hunts", thumb: "media/a3.jpg", video: "media/a3.mp4", description: "Every street food stall, rated." },
+        { title: "Festival Nights", thumb: "media/a4.jpg", video: "media/a4.mp4", description: "Lights, music, you." },
+      ],
+    },
+  ],
+
+  /* Used automatically if a file in /media is missing, so the site
+     still works while you're collecting your pictures/videos.     */
+  demoVideo: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+};
+
+
+</script>
+  <script>
+(() => {
+  const C = CONFIG;
+  const $ = (id) => document.getElementById(id);
+  const PALETTES = [["#e50914", "#4a0b0e"], ["#ff6fa5", "#5b1236"], ["#f5a623", "#5a2d00"], ["#7b5cff", "#1e1250"], ["#00b3a4", "#06332f"], ["#ff8a5b", "#4d1a0a"]];
+
+  /* ---------- placeholder image if a file is missing ---------- */
+  function placeholder(title, i = 0, w = 400, h = 600) {
+    const [a, b] = PALETTES[i % PALETTES.length];
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>
+      <rect width="100%" height="100%" fill="url(#g)"/>
+      <text x="50%" y="45%" font-size="${w / 5}" text-anchor="middle">💖</text>
+      <text x="50%" y="62%" font-family="Arial" font-weight="bold" font-size="${w / 14}" fill="#fff" text-anchor="middle">${title}</text>
+    </svg>`;
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+  function img(src, title, i, w, h) {
+    const el = document.createElement("img");
+    el.loading = "lazy";
+    el.alt = title;
+    el.src = src;
+    el.onerror = () => { el.onerror = null; el.src = placeholder(title, i, w, h); };
+    return el;
+  }
+  function bgWithFallback(el, src, title, i) {
+    const probe = new Image();
+    probe.onload = () => (el.style.backgroundImage = `url("${src}")`);
+    probe.onerror = () => (el.style.backgroundImage = `url("${placeholder(title, i, 1600, 900)}")`);
+    probe.src = src;
+  }
+
+  /* ---------- intro → profiles → app ---------- */
+  const introVideo = $("introVideo");
+  const soundGate = $("soundGate");
+  function showProfiles() {
+    $("intro").classList.add("hidden");
+    $("profiles").classList.remove("hidden");
+  }
+  introVideo.onended = showProfiles;
+  introVideo.onerror = showProfiles;
+
+  function playWithSound() {
+    soundGate.classList.add("hidden");
+    introVideo.muted = false;
+    introVideo.volume = 1;
+    introVideo.currentTime = 0;
+    introVideo.play().catch(showProfiles);
+  }
+
+  // Try playing immediately with sound; if the browser blocks unmuted autoplay, pause and ask for 1 tap so sound is 100% guaranteed
+  introVideo.muted = false;
+  introVideo.volume = 1;
+  introVideo.play().catch(() => {
+    introVideo.pause();
+    introVideo.currentTime = 0;
+    soundGate.classList.remove("hidden");
+    soundGate.addEventListener("click", playWithSound, { once: true });
+  });
+
+  $("herProfile").addEventListener("click", () => {
+    $("profiles").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    window.scrollTo(0, 0);
+    if (isBirthday()) setTimeout(confetti, 500);
+    setTimeout(() => toast(`🎉 <b>New Episode:</b> ${C.herName}'s Birthday is now streaming. Only on BirthdayFlix.`), 2200);
+  });
+
+  /* ---------- fill static content ---------- */
+  const avatarFallback = placeholder("You", 1, 300, 300);
+  [$("profileImg"), $("navAvatar")].forEach((el) => {
+    el.src = C.avatar;
+    el.onerror = () => { el.onerror = null; el.src = avatarFallback; };
+  });
+  $("profileName").textContent = C.herName;
+  $("fromName").textContent = C.fromName;
+  const H = C.hero;
+  $("heroBadge").textContent = H.badge;
+  $("heroLine1").textContent = H.line1;
+  $("heroLine2").textContent = H.line2;
+  $("heroMatch").textContent = H.match;
+  $("heroYear").textContent = H.year;
+  $("heroRating").textContent = H.rating;
+  $("heroSeasons").textContent = H.seasons;
+  $("heroDesc").textContent = H.description;
+  bgWithFallback($("heroBg"), H.image, "Happy Birthday", 0);
+
+  const heroItem = { title: `Happy Birthday, ${C.herName}`, video: H.video, thumb: H.image, description: H.description };
+  $("heroPlay").onclick = () => play(heroItem);
+  $("heroInfo").onclick = $("heroInfoD").onclick = () => openModal(heroItem, C.rows[0].items);
+  $("myListBtn").onclick = () => toast("✔️ Added to My List — but you were already #1 on mine.");
+  $("bellBtn").onclick = () => toast(`💌 Reminder: you are loved. Today and every day.`);
+
+  /* ---------- rows ---------- */
+  const rowsEl = $("rows");
+  C.rows.forEach((row, ri) => {
+    const sec = document.createElement("section");
+    sec.className = "row";
+    sec.innerHTML = `<h2>${row.title}</h2><div class="row-wrap"><button class="arrow l">‹</button><div class="slider"></div><button class="arrow r">›</button></div>`;
+    const slider = sec.querySelector(".slider");
+    const landscape = row.type === "landscape";
+
+    row.items.forEach((item, i) => {
+      const card = document.createElement("div");
+      card.className = "card " + (landscape ? "landscape" : "portrait");
+      card.appendChild(img(item.thumb, item.title, ri * 3 + i, landscape ? 640 : 400, landscape ? 360 : 600));
+      card.insertAdjacentHTML("beforeend",
+        `<div class="playicon"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></div><div class="label">${item.title}</div>`);
+
+      let el = card;
+      if (row.type === "top10") {
+        el = document.createElement("div");
+        el.className = "top10";
+        el.innerHTML = `<span class="num">${i + 1}</span>`;
+        el.appendChild(card);
+      }
+      el.addEventListener("click", () => play(item));
+      slider.appendChild(el);
+    });
+
+    sec.querySelector(".l").onclick = () => slider.scrollBy({ left: -slider.clientWidth * .85, behavior: "smooth" });
+    sec.querySelector(".r").onclick = () => slider.scrollBy({ left: slider.clientWidth * .85, behavior: "smooth" });
+    rowsEl.appendChild(sec);
+  });
+
+  /* ---------- player ---------- */
+  const video = $("video");
+  let titleTimer;
+  function play(item) {
+    closeModal();
+    $("playerTitle").textContent = item.title;
+    $("playerTitle").style.opacity = 1;
+    $("player").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    video.onerror = () => {
+      if (C.demoVideo && video.src !== C.demoVideo) { video.src = C.demoVideo; video.play().catch(() => {}); }
+    };
+    video.src = item.video;
+    video.play().catch(() => {});
+    const el = $("player");
+    if (el.requestFullscreen && window.innerWidth < 900) el.requestFullscreen().catch(() => {});
+    clearTimeout(titleTimer);
+    titleTimer = setTimeout(() => ($("playerTitle").style.opacity = 0), 3000);
+  }
+  function closePlayer() {
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    $("player").classList.add("hidden");
+    document.body.style.overflow = "";
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }
+  $("closePlayer").onclick = closePlayer;
+  video.addEventListener("ended", () => { closePlayer(); toast("💖 Hope that made you smile. Pick another memory!"); });
+
+  /* ---------- info modal ---------- */
+  function openModal(item, episodes) {
+    $("modalTitle").textContent = item.title;
+    $("modalYear").textContent = H.year;
+    $("modalDesc").textContent = item.description;
+    bgWithFallback($("modalHero"), item.thumb, item.title, 2);
+    $("modalPlay").onclick = () => play(item);
+    const list = $("episodes");
+    list.innerHTML = "";
+    episodes.forEach((ep, i) => {
+      const d = document.createElement("div");
+      d.className = "ep";
+      d.innerHTML = `<span class="n">${i + 1}</span>`;
+      d.appendChild(img(ep.thumb, ep.title, i, 640, 360));
+      d.insertAdjacentHTML("beforeend", `<div><b>${ep.title}</b><small>${ep.description || ""}</small></div>`);
+      d.onclick = () => play(ep);
+      list.appendChild(d);
+    });
+    $("modal").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    $("modal").classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+  $("closeModal").onclick = closeModal;
+  $("modal").addEventListener("click", (e) => { if (e.target.id === "modal") closeModal(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { closePlayer(); closeModal(); }
+  });
+
+  /* ---------- toast ---------- */
+  let toastTimer;
+  function toast(html) {
+    const t = $("toast");
+    t.innerHTML = html;
+    t.classList.remove("hidden");
+    t.style.animation = "none"; t.offsetHeight; t.style.animation = "";
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.add("hidden"), 4500);
+  }
+
+  /* ---------- header on scroll ---------- */
+  addEventListener("scroll", () => $("topbar").classList.toggle("solid", scrollY > 60), { passive: true });
+
+  /* ---------- birthday logic ---------- */
+  function bday() { const [y, m, d] = C.birthday.split("-").map(Number); return new Date(y, m - 1, d); }
+  function isBirthday() { const b = bday(), n = new Date(); return n.getMonth() === b.getMonth() && n.getDate() === b.getDate(); }
+  function tick() {
+    const el = $("countdown");
+    const diff = bday() - new Date();
+    if (isBirthday()) { el.textContent = "🎂 PREMIERING TODAY"; el.classList.remove("hidden"); return; }
+    if (diff <= 0) { el.classList.add("hidden"); return; }
+    const d = Math.floor(diff / 864e5), h = Math.floor(diff / 36e5) % 24, m = Math.floor(diff / 6e4) % 60, s = Math.floor(diff / 1e3) % 60;
+    el.textContent = `PREMIERES IN ${d}d ${h}h ${m}m ${s}s`;
+    el.classList.remove("hidden");
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- confetti ---------- */
+  function confetti() {
+    const cv = $("confetti"), ctx = cv.getContext("2d");
+    cv.width = innerWidth; cv.height = innerHeight;
+    const colors = ["#e50914", "#ff6fa5", "#fff", "#f5a623", "#ffd1e1"];
+    const parts = Array.from({ length: 180 }, () => ({
+      x: Math.random() * cv.width, y: -20 - Math.random() * cv.height,
+      w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+      vy: 2 + Math.random() * 3, vx: -1 + Math.random() * 2,
+      r: Math.random() * 6, vr: -.1 + Math.random() * .2,
+      c: colors[Math.floor(Math.random() * colors.length)],
+    }));
+    let frames = 0;
+    (function loop() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      parts.forEach((p) => {
+        p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+        ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+      });
+      if (++frames < 420) requestAnimationFrame(loop); else ctx.clearRect(0, 0, cv.width, cv.height);
+    })();
+  }
+  $("heroPlay").addEventListener("dblclick", confetti);
+})();
+
+
+</script>
+</body>
+</html>
+
+
